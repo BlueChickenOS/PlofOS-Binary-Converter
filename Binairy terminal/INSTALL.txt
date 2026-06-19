@@ -1,0 +1,655 @@
+================================================
+   BINARY SOUND CONVERTER -- INSTALL GUIDE
+                by PlofOS Group
+================================================
+
+Two versions are available:
+  - Terminal version (binary_sound.py)
+  - GUI version     (binary_sound_gui.py)
+
+Both need binary_sound.py in the same folder.
+The GUI is a wrapper around the terminal version.
+
+
+================================================
+ WINDOWS -- TERMINAL VERSION
+================================================
+
+------------------------------------------------
+ STEP 1 -- Install Python
+------------------------------------------------
+
+  python --version
+
+  Should show Python 3.x.x
+  Download from https://python.org if missing.
+  IMPORTANT: tick "Add Python to PATH" during
+  installation or nothing will work.
+
+
+------------------------------------------------
+ STEP 2 -- Install libraries
+------------------------------------------------
+
+  python -m pip install numpy
+  python -m pip install sounddevice
+  python -m pip install scipy
+  python -m pip install soundfile
+  python -m pip install pyinstaller
+
+
+------------------------------------------------
+ STEP 3 -- Run as script
+------------------------------------------------
+
+  python "C:\path\to\binary_sound.py"
+
+Use quotes if your path contains spaces.
+
+
+------------------------------------------------
+ STEP 4 -- Build EXE (recommended)
+------------------------------------------------
+
+Put binary_sound.py and BUILD_EXE.bat in the
+same folder. Double-click BUILD_EXE.bat.
+
+  -> Installs all libraries automatically
+  -> Builds BinarySoundConverter.exe
+  -> Copies EXE to the same folder
+  -> Cleans up all build files
+
+Double-click BinarySoundConverter.exe to run.
+No Python needed after building!
+
+
+------------------------------------------------
+ STEP 5 (OPTIONAL) -- Enable MP3
+------------------------------------------------
+
+  1. Go to https://ffmpeg.org/download.html
+  2. Download the Windows build
+  3. Extract the zip file
+  4. Add the "bin" folder to your system PATH
+
+WAV works perfectly fine without ffmpeg.
+
+
+================================================
+ WINDOWS -- GUI VERSION
+================================================
+
+Requires binary_sound.py in the same folder!
+
+------------------------------------------------
+ Run the GUI
+------------------------------------------------
+
+Double-click LAUNCH_GUI.bat
+
+This uses pythonw.exe (no console window).
+The GUI opens with 4 panels:
+  1 - Folder browser (click to expand/collapse)
+  2 - Terminal (type in the > box at bottom)
+  3 - Recent log
+  4 - Online mode status
+
+
+------------------------------------------------
+ Build GUI EXE
+------------------------------------------------
+
+Double-click BUILD_GUI_EXE.bat
+
+Creates BinarySoundConverterGUI.exe
+Keep binary_sound.py in the same folder!
+
+
+------------------------------------------------
+ WINDOWS FIREWALL -- ONLINE MODE
+------------------------------------------------
+
+First time using Online Mode, Windows Firewall
+may ask for permission. Click "Allow" on both
+Private and Public networks.
+
+Open ports manually if needed:
+  UDP 55400 -- peer discovery
+  TCP 55401 -- data transfer
+
+
+================================================
+ LINUX -- TERMINAL VERSION
+================================================
+
+------------------------------------------------
+ STEP 1 -- Install Python
+------------------------------------------------
+
+Python 3 is usually pre-installed. Check with:
+
+  python3 --version
+
+If missing:
+  sudo apt-get install python3 python3-pip   # Debian/Ubuntu
+  sudo dnf install python3 python3-pip       # Fedora/RHEL
+  sudo pacman -S python python-pip           # Arch
+
+
+------------------------------------------------
+ STEP 2 -- Install PortAudio
+------------------------------------------------
+
+Required for microphone and audio on Linux:
+
+  sudo apt-get install portaudio19-dev       # Debian/Ubuntu
+  sudo dnf install portaudio-devel           # Fedora/RHEL
+  sudo pacman -S portaudio                   # Arch
+
+
+------------------------------------------------
+ STEP 3 -- Install libraries
+------------------------------------------------
+
+  pip3 install numpy
+  pip3 install sounddevice
+  pip3 install scipy
+  pip3 install soundfile
+  pip3 install pyinstaller
+
+If pip3 is not found:
+  python3 -m pip install <library>
+
+
+------------------------------------------------
+ STEP 4 -- Run as script
+------------------------------------------------
+
+  python3 "/path/to/binary_sound.py"
+
+Or make it executable:
+  chmod +x binary_sound.py
+  ./binary_sound.py
+
+
+------------------------------------------------
+ STEP 5 -- Build executable
+------------------------------------------------
+
+Put binary_sound.py and BUILD_LINUX.sh in the
+same folder, then run:
+
+  bash BUILD_LINUX.sh
+
+  -> Installs PortAudio via your package manager
+  -> Installs all Python libraries
+  -> Builds BinarySoundConverter executable
+  -> Copies it to the same folder
+  -> Cleans up all build files
+
+Run with:  ./BinarySoundConverter
+
+
+------------------------------------------------
+ STEP 6 (OPTIONAL) -- Enable MP3
+------------------------------------------------
+
+  sudo apt-get install ffmpeg               # Debian/Ubuntu
+  sudo dnf install ffmpeg                   # Fedora/RHEL
+  sudo pacman -S ffmpeg                     # Arch
+
+
+------------------------------------------------
+ LINUX FIREWALL -- ONLINE MODE
+------------------------------------------------
+
+  sudo ufw allow 55400/udp
+  sudo ufw allow 55401/tcp
+
+Or for firewalld:
+  sudo firewall-cmd --add-port=55400/udp --permanent
+  sudo firewall-cmd --add-port=55401/tcp --permanent
+  sudo firewall-cmd --reload
+
+
+================================================
+ LINUX -- GUI VERSION
+================================================
+
+The GUI version works on Linux!
+It uses tkinter which runs on all platforms.
+
+------------------------------------------------
+ STEP 1 -- Install tkinter
+------------------------------------------------
+
+  sudo apt-get install python3-tk           # Debian/Ubuntu
+  sudo dnf install python3-tkinter          # Fedora/RHEL
+  sudo pacman -S tk                         # Arch
+
+
+------------------------------------------------
+ STEP 2 -- Run the GUI
+------------------------------------------------
+
+Put binary_sound.py and binary_sound_gui.py
+in the same folder, then run:
+
+  bash LAUNCH_GUI.sh
+
+Or directly:
+  python3 binary_sound_gui.py
+
+No console window appears on Linux -- it
+opens directly into the GUI.
+
+
+------------------------------------------------
+ STEP 3 -- Build GUI executable (Linux)
+------------------------------------------------
+
+  bash BUILD_LINUX.sh
+
+This builds the terminal version only.
+To build the GUI as a standalone executable:
+
+  pip3 install pyinstaller
+  python3 -m PyInstaller --onefile --windowed \
+    --name "BinarySoundConverterGUI" \
+    binary_sound_gui.py
+
+The result is in the dist/ folder.
+Keep binary_sound.py next to it!
+
+
+================================================
+ FILES NEXT TO THE EXE / SCRIPT
+================================================
+
+  settings.txt      Created on first run.
+                    Edit to change defaults.
+                    Errors shown at startup.
+                    Open via Settings -> 4
+
+  bsc_log.txt       Activity log. Rotates at
+                    10 MB to bsc_log_old.txt.
+                    Records all actions, file
+                    paths used, and network
+                    activity.
+
+  Audio\            WAV and MP3 files
+  TextFiles\        Binary TXT files
+  RebuiltFiles\     Files rebuilt from binary
+  Keys\             Row mode key file
+  Infiles\          Drop files here for quick
+                    access via "infiles" command
+
+All folders created automatically on first run.
+
+
+================================================
+ SETTINGS.TXT -- ALL OPTIONS
+================================================
+
+Folders:
+  output_folder=       Full path or leave blank
+  infiles_folder=      Full path or leave blank
+  log_file=            Full path to log .txt
+                       Leave blank = next to EXE
+
+Audio defaults:
+  freq_zero=440        Hz for bit 0
+  freq_one=880         Hz for bit 1
+  tone_duration=0.01   Seconds per bit
+  volume=0.5           0.0 to 1.0
+
+Header block (only editable here):
+  header_freq_zero=300
+  header_freq_one=600
+  header_tone_duration=0.05
+
+Row mode:
+  row_mode=false
+  row1_freq_zero=400
+  row1_freq_one=800
+  row2_freq_zero=500
+  row2_freq_one=900
+  row3_freq_zero=600
+  row3_freq_one=1000
+
+Locks:
+  lock_freq_zero=false
+  lock_freq_one=false
+  lock_tone_duration=false
+  lock_volume=false
+
+Lines starting with # are comments.
+Delete settings.txt to reset to defaults.
+Errors shown at startup without crashing.
+
+
+================================================
+ MAIN MENU
+================================================
+
+  1 - Binary -> Sound
+  2 - Sound -> Binary
+  3 - File Tools
+  4 - Settings
+  5 - Online Mode
+  8 - Quit
+
+  Special commands (work in ALL menus):
+    Type "infiles" -- quick file access
+    Type "scram"   -- emergency delete (see below)
+
+
+================================================
+ SCRAM COMMAND
+================================================
+
+Type "scram" at any menu or submenu to trigger
+an emergency delete of all data the app created.
+
+What it deletes:
+  Audio\          -- all WAV and MP3 files
+  TextFiles\      -- all binary TXT files
+  RebuiltFiles\   -- all rebuilt files
+  Keys\           -- row mode key file
+  Infiles\        -- all files in inbox folder
+  bsc_log.txt     -- the activity log
+  settings.txt    -- all your settings
+
+What it does NOT delete:
+  The EXE or script files themselves
+  Any files you put there manually from outside
+
+How it works:
+  1. Type "scram" at any menu
+  2. It shows you exactly what will be deleted
+  3. It asks: "Are you sure? (y/n)"
+  4. Type "y" to confirm, anything else cancels
+  5. All listed items are permanently deleted
+
+After scram:
+  Folders are recreated automatically next time
+  you save a file or start the app.
+  Settings.txt is also recreated with defaults.
+
+WARNING: This cannot be undone. Use with care.
+
+
+================================================
+ BINARY -> SOUND SUBMENU
+================================================
+
+  1 - Type binary -> Play sound
+  2 - Type binary -> Save WAV + MP3
+  3 - TXT file of binary -> Save WAV + MP3
+  4 - Flip binary (0s become 1s, 1s become 0s)
+  5 - Save WAV with header block
+      Enter message (max 200 chars).
+      Payload can be: typed binary, file path,
+      or blank for header-only.
+  0 - Back
+
+
+================================================
+ SOUND -> BINARY SUBMENU
+================================================
+
+  1 - Record microphone -> Binary / TXT
+  2 - Load WAV file -> Binary / TXT
+  3 - Read header only from WAV
+  0 - Back
+
+Results over 200 bits auto-save as TXT.
+
+
+================================================
+ FILE TOOLS SUBMENU
+================================================
+
+  1 - Any file -> Binary TXT
+  2 - Any file -> WAV + MP3
+  3 - Binary TXT -> Rebuild original file
+  Type "infiles" to browse Infiles folder
+  Type "scram" for emergency delete
+  0 - Back
+
+
+================================================
+ SETTINGS SUBMENU
+================================================
+
+  1 - Show current settings + folder paths
+  2 - Change audio settings
+  3 - Change output folder
+  4 - Open settings.txt in default editor
+  5 - Row Mode (enable/disable/configure)
+  6 - View log (last 20 lines/open/clear)
+  7 - Change log file path
+  0 - Back
+
+
+================================================
+ ONLINE MODE
+================================================
+
+Main Menu -> 5 -> Online Mode -> 1 to start.
+
+Uses UDP port 55400 for discovery.
+Uses TCP port 55401 for transfers.
+Both machines must be on the same network.
+
+ONLINE MENU:
+  1 - Start / Stop online mode
+  2 - Send binary to ALL peers
+  3 - Send binary to ONE peer
+  4 - Send WAV to ALL peers
+  5 - Send WAV to ONE peer
+  6 - Send TXT file to ALL peers
+  7 - Send TXT file to ONE peer
+  8 - Call ID (ask peer for their name)
+  9 - Check inbox
+  r - Refresh peer list
+  0 - Back
+
+Peers shown as: Peer 1, Peer 2 (anonymous).
+After Call ID, their chosen name shows too.
+WAV files capped at 50 MB per send.
+TXT files capped at 10 MB per send.
+
+Incoming messages ask what to do:
+  Binary -> Save as TXT / Convert to WAV
+  WAV    -> Save / Save and decode / Discard
+  TXT    -> Save / Save and decode / Discard
+
+
+================================================
+ ROW MODE
+================================================
+
+Settings -> 5 -> Row Mode to enable.
+
+Splits encoding across 3 frequency rows,
+rotating every 8 bits:
+
+  Bits  1-8  -> Row 1
+  Bits  9-16 -> Row 2
+  Bits 17-24 -> Row 3
+  Bits 25-32 -> Row 1 (repeats)
+
+Key file saved to Keys\row_key.txt
+Row settings saved to settings.txt.
+[ROW MODE ON] shown in main menu when active.
+
+
+================================================
+ HEADER BLOCK
+================================================
+
+A 200-char text message prepended to a WAV at
+fixed frequencies (set in settings.txt only).
+
+To create: Binary -> Sound -> 5
+To read:   Sound -> Binary -> 3
+           Or Infiles -> WAV -> Read header
+
+Header frequencies are separate from session
+and row mode frequencies.
+
+
+================================================
+ LOG FILE
+================================================
+
+Location  : next to EXE (bsc_log.txt)
+Max size  : 10 MB, rotates to bsc_log_old.txt
+Change via: Settings -> 7
+View via  : Settings -> 6
+
+What gets logged:
+  App start and close
+  Every menu visited and option chosen
+  Every WAV/MP3/TXT file saved + full path
+  Every file decoded + source path
+  Every file rebuilt from binary + output path
+  Output folder and log path changes
+  Row mode changes + key file path
+  Network sends + file paths + destinations
+  Network receives + saved paths
+  Peer discovery and Call ID exchanges
+  Microphone decode results
+
+
+================================================
+ GUI VERSION -- PANELS
+================================================
+
+  1 (Left)       Folder browser
+                 Click folder name to expand
+                 Shows: filename, type, size
+                 Shows: full path (selectable)
+                 Copy button copies path
+
+  2 (Center)     Terminal
+                 Output shown in color
+                 Type in the > box at bottom
+                 Arrow keys for history
+
+  3 (Top right)  Recent log (last 20 lines)
+                 Updates every 2 seconds
+
+  4 (Bot right)  Online mode status
+                 Shows connected peers
+                 Shows inbox messages
+
+
+================================================
+ QUICK REFERENCE -- Install commands
+================================================
+
+WINDOWS:
+  python -m pip install numpy sounddevice
+  python -m pip install scipy soundfile
+  python -m pip install pyinstaller
+
+LINUX (Debian/Ubuntu):
+  sudo apt-get install portaudio19-dev
+  sudo apt-get install python3-tk ffmpeg
+  pip3 install numpy sounddevice scipy
+  pip3 install soundfile pyinstaller
+
+LINUX (Fedora/RHEL):
+  sudo dnf install portaudio-devel python3-tkinter ffmpeg
+  pip3 install numpy sounddevice scipy
+  pip3 install soundfile pyinstaller
+
+LINUX (Arch):
+  sudo pacman -S portaudio tk ffmpeg
+  pip3 install numpy sounddevice scipy
+  pip3 install soundfile pyinstaller
+
+
+================================================
+ TROUBLESHOOTING
+================================================
+
+"python is not recognized" (Windows)
+  -> https://python.org -- tick "Add to PATH"
+
+"pip is not recognized" (Windows)
+  -> Use: python -m pip install ...
+
+"pyinstaller is not recognized"
+  -> Windows: python -m PyInstaller ...
+  -> Linux:   python3 -m PyInstaller ...
+  -> BUILD_EXE.bat and BUILD_LINUX.sh handle this
+
+"No module named X"
+  -> Run: pip3 install X
+
+"PortAudio library not found" (Linux)
+  -> sudo apt-get install portaudio19-dev
+     then: pip3 install --force-reinstall sounddevice
+
+"No module named tkinter" (Linux GUI)
+  -> sudo apt-get install python3-tk
+
+"No microphone found"
+  -> Plug in a microphone
+  -> Linux: check with: arecord -l
+
+"Recording was silent"
+  -> Windows: Settings -> Privacy -> Microphone
+  -> Linux: check PulseAudio / ALSA permissions
+
+"Could not decode -- frequencies don't match"
+  -> Use same Hz as when encoding
+  -> Check Keys\row_key.txt for row mode
+  -> Try longer tone duration in Settings
+
+"No header block found"
+  -> File has no header, or header frequencies
+     in settings.txt changed since encoding
+
+"LibsndfileError: System error"
+  -> python -m pip install --upgrade soundfile
+
+"WARNING -- Issues found in settings.txt"
+  -> Check settings.txt for typos
+  -> Delete it to reset all settings to defaults
+
+"Online Mode -- peers not appearing"
+  -> Both machines must be on same network
+  -> Check firewall: UDP 55400, TCP 55401
+  -> Wait a few seconds after starting
+  -> Try option r to refresh
+
+"Could Not Find ...BinarySoundConverter.spec"
+  -> Put binary_sound.py and BUILD_EXE.bat
+     in the same folder before running
+
+"GUI -- can't type / no input box"
+  -> Click directly on the > input box
+     at the bottom of the terminal panel
+  -> Make sure LAUNCH_GUI.bat is used on
+     Windows (uses pythonw, no console)
+
+"GUI -- binary_sound.py not found"
+  -> Both files must be in the same folder:
+     binary_sound.py
+     binary_sound_gui.py
+
+"I want to start completely fresh"
+  -> Type "scram" at any menu.
+     It will delete all created files and
+     folders, the log, and settings.txt.
+     The app recreates everything on next run.
+
+"Permission denied running .sh file" (Linux)
+  -> chmod +x BUILD_LINUX.sh
+     then: bash BUILD_LINUX.sh
+
+================================================
